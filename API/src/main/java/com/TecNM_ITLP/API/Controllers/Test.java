@@ -10,11 +10,13 @@ import com.TecNM_ITLP.API.models.Producto;
 @RestController
 public class Test {
 
+    //Endpoint 1 "Hello"
     @GetMapping("/hello")
     public String helloworld(){
         return "Hola API Rest";
     }
 
+    //Endpoint 2 "producto"
     @GetMapping("/producto")
     public Producto getProducto() {
         Producto p = new Producto();
@@ -24,5 +26,25 @@ public class Test {
         return p;
     }
 
-    
+    //Endpoint 3 "Productos"
+    @GetMapping("/productos")
+    public Producto[] getProductos() {
+        Producto p1 = new Producto();
+        p1.nombre = "Coca Cola";
+        p1.precio = 18.5;
+        p1.codigoBarras = "7501055312306";
+
+        Producto p2 = new Producto();
+        p2.nombre = "Pepsi";
+        p2.precio = 17.5;
+        p2.codigoBarras = "7501055312307";
+
+        Producto p3 = new Producto();
+        p3.nombre = "Fanta";
+        p3.precio = 16.5;
+        p3.codigoBarras = "7501055312308";
+
+        return new Producto[]{p1, p2, p3};
+    }
+
 }
