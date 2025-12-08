@@ -19,38 +19,36 @@ public class DomicilioRepository {
         this.jdbcClient = jdbcClient;
     }
 
-    // 1. Obtener todos
+    // 1. Obtener todos 
     public List<Domicilio> findAll() {
-        String sql = "SELECT * FROM direcciones";
+        String sql = "SELECT * FROM domicilios";
         return jdbcClient.sql(sql)
                 .query(new DomicilioRM())
                 .list();
     }
 
-    // 2. Obtener por ID
+    // 2. Obtener por ID 
     public Optional<Domicilio> findById(int id) {
-        String sql = "SELECT * FROM direcciones WHERE id = :id";
+        String sql = "SELECT * FROM domicilios WHERE id = :id"; 
         return jdbcClient.sql(sql)
                 .param("id", id)
                 .query(new DomicilioRM())
                 .optional();
     }
 
-    // 3. Insertar
-    // Nota: Convertimos el char[] o String del DTO a String para la BD, ya que JDBC prefiere Strings
+    // 3. Insertar 
     public Domicilio save(DomicilioDTO d) {
         String sql = """
-                INSERT INTO direcciones (calle, numero, colonia, cp, estado, ciudad, usuarios_id) 
+                INSERT INTO domicilios (calle, numero, colonia, cp, estado, ciudad, usuarios_id) 
                 VALUES (:calle, :numero, :colonia, :cp, :estado, :ciudad, :usuarios_id) 
                 RETURNING id
                 """;
         
-        // Asumimos que tu DTO recibe el CP como String (es lo normal en JSON)
         Integer idGenerado = jdbcClient.sql(sql)
                 .param("calle", d.calle())
                 .param("numero", d.numero())
                 .param("colonia", d.colonia())
-                .param("cp", String.valueOf(d.cp())) // Convertimos a String para enviar a la BD
+                .param("cp", String.valueOf(d.cp())) 
                 .param("estado", d.estado())
                 .param("ciudad", d.ciudad())
                 .param("usuarios_id", d.usuarios_id())
@@ -63,7 +61,7 @@ public class DomicilioRepository {
     // 4. Actualizar
     public Domicilio update(int id, PUTDomicilioDTO d) {
         String sql = """
-                UPDATE direcciones 
+                UPDATE domicilios
                 SET calle=:calle, numero=:numero, colonia=:colonia, cp=:cp, estado=:estado, ciudad=:ciudad
                 WHERE id=:id 
                 RETURNING id
@@ -83,9 +81,9 @@ public class DomicilioRepository {
         return idActualizado.isPresent() ? findById(id).orElse(null) : null;
     }
 
-    // 5. Eliminar
+    // 5. Eliminar 
     public void deleteById(int id) {
-        String sql = "DELETE FROM direcciones WHERE id = :id";
+        String sql = "DELETE FROM domicilios WHERE id = :id";
         jdbcClient.sql(sql)
                 .param("id", id)
                 .update();
