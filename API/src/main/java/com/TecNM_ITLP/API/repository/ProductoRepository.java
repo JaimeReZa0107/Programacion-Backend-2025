@@ -19,9 +19,9 @@ public class ProductoRepository {
         this.jdbcClient = jdbcClient;
     }
 
-    // 1. Obtener todos (Usando el archivo ProductoRM)
+    // 1. Obtener todos 
     public List<Producto> findAll() {
-        String sql = "SELECT * FROM productos"; // Sin 'WHERE activo=true' porque no tienes esa columna
+        String sql = "SELECT * FROM productos"; 
         return jdbcClient.sql(sql)
                 .query(new ProductoRM()) // <--- Aquí usamos tu traductor
                 .list();
@@ -89,8 +89,7 @@ public class ProductoRepository {
         return idActualizado.isPresent() ? findById(id).orElse(null) : null;
     }
 
-    // 5. Eliminar (¡ESTO ES LO QUE CAMBIA RESPECTO A TU COMPAÑERO!)
-    // Tú borras de verdad, él solo ocultaba.
+    // 5. Eliminar 
     public void deleteById(int id) {
         String sql = "DELETE FROM productos WHERE id = :id";
         jdbcClient.sql(sql)
