@@ -4,17 +4,17 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.lang.NonNull;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.TecNM_ITLP.API.models.DetalleCarrito;
+import com.TecNM_ITLP.API.models.DetallesPedido;
 
-public class DetalleCarritoRM implements RowMapper<DetalleCarrito> {
+public class DetallesPedidoRM implements RowMapper<DetallesPedido> {
     @Override
-    public DetalleCarrito mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
-        return new DetalleCarrito(
+    public DetallesPedido mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
+        return new DetallesPedido(
             rs.getInt("id"),
             rs.getInt("cantidad"),
             rs.getDouble("precio"),
             rs.getInt("productos_id"),
-            rs.getInt("usuarios_id")
+            rs.getInt("pedidos_id")
         );
     }
 }

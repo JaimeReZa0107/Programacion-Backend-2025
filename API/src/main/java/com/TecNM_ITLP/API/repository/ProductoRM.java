@@ -22,7 +22,7 @@ public class ProductoRM implements RowMapper<Producto> {
             rs.getFloat("alto"),
             rs.getFloat("ancho"),
             rs.getFloat("profundidad"),
-            rs.getInt("categorias_id") //en la BD es categorias_id
+            rs.getInt("categorias_id") 
         );
     }
 }

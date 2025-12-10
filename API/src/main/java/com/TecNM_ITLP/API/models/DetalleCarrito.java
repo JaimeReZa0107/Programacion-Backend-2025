@@ -2,7 +2,7 @@ package com.TecNM_ITLP.API.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public record DetallesCarrito(
+public record DetalleCarrito(
     @Schema(description = "ID único de la línea del carrito", example = "1")
     int id,
     

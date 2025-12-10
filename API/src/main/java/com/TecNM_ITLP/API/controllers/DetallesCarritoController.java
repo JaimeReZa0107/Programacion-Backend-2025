@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-import com.TecNM_ITLP.API.models.DetallesCarrito;
+import com.TecNM_ITLP.API.models.DetalleCarrito;
 import com.TecNM_ITLP.API.repository.DetallesCarritoRepository;
-import com.TecNM_ITLP.API.dto.DetallesCarritoDTO;
-import com.TecNM_ITLP.API.dto.PUTDetallesCarritoDTO;
+import com.TecNM_ITLP.API.dto.DetalleCarritoDTO;
+import com.TecNM_ITLP.API.dto.PUTDetalleCarritoDTO;
 
 @RestController
 @RequestMapping("/detalles_carrito")
@@ -24,13 +24,13 @@ public class DetallesCarritoController {
 
     @GetMapping
     @Operation(summary = "Ver todos los items", description = "Lista todos los productos en todos los carritos (Admin)")
-    public ResponseEntity<List<DetallesCarrito>> obtenerTodos() {
+    public ResponseEntity<List<DetalleCarrito>> obtenerTodos() {
         return ResponseEntity.ok(repository.findAll());
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Buscar item por ID", description = "Obtiene un detalle específico del carrito")
-    public ResponseEntity<DetallesCarrito> obtenerPorId(@PathVariable int id) {
+    public ResponseEntity<DetalleCarrito> obtenerPorId(@PathVariable int id) {
         return repository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -38,15 +38,15 @@ public class DetallesCarritoController {
 
     @GetMapping("/usuario/{usuarioId}")
     @Operation(summary = "Ver carrito de un usuario", description = "Obtiene todos los productos que un usuario tiene en su canasta")
-    public ResponseEntity<List<DetallesCarrito>> obtenerPorUsuario(@PathVariable int usuarioId) {
+    public ResponseEntity<List<DetalleCarrito>> obtenerPorUsuario(@PathVariable int usuarioId) {
         return ResponseEntity.ok(repository.findByUsuarioId(usuarioId));
     }
 
     @PostMapping
     @Operation(summary = "Agregar al carrito", description = "Añade un producto y calcula su precio total automáticamente")
-    public ResponseEntity<?> agregarAlCarrito(@RequestBody DetallesCarritoDTO dto) {
+    public ResponseEntity<?> agregarAlCarrito(@RequestBody DetalleCarritoDTO dto) {
         try {
-            DetallesCarrito nuevo = repository.save(dto);
+            DetalleCarrito nuevo = repository.save(dto);
             return ResponseEntity.status(201).body(nuevo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,8 +56,8 @@ public class DetallesCarritoController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Actualizar cantidad", description = "Modifica la cantidad de un producto y recalcula el precio")
-    public ResponseEntity<DetallesCarrito> actualizarCantidad(@PathVariable int id, @RequestBody PUTDetallesCarritoDTO dto) {
-        DetallesCarrito actualizado = repository.update(id, dto);
+    public ResponseEntity<DetalleCarrito> actualizarCantidad(@PathVariable int id, @RequestBody PUTDetalleCarritoDTO dto) {
+        DetalleCarrito actualizado = repository.update(id, dto);
         if (actualizado != null) {
             return ResponseEntity.ok(actualizado);
         } else {

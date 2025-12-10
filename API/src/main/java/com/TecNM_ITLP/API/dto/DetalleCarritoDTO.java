@@ -2,7 +2,7 @@ package com.TecNM_ITLP.API.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-public record DetallesCarritoDTO(
+public record DetalleCarritoDTO(
     @Schema(description = "ID del producto a agregar", example = "1")
     int productos_id,
     

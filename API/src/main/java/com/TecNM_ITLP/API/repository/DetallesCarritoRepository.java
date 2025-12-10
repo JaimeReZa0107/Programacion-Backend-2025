@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
-import com.TecNM_ITLP.API.models.DetallesCarrito;
-import com.TecNM_ITLP.API.dto.DetallesCarritoDTO;
-import com.TecNM_ITLP.API.dto.PUTDetallesCarritoDTO;
+import com.TecNM_ITLP.API.models.DetalleCarrito;
+import com.TecNM_ITLP.API.dto.DetalleCarritoDTO;
+import com.TecNM_ITLP.API.dto.PUTDetalleCarritoDTO;
 
 @Repository
 public class DetallesCarritoRepository {
@@ -20,25 +20,25 @@ public class DetallesCarritoRepository {
     }
 
     // 1. Obtener todos
-    public List<DetallesCarrito> findAll() {
+    public List<DetalleCarrito> findAll() {
         String sql = "SELECT * FROM detalles_carrito";
-        return jdbcClient.sql(sql).query(new DetallesCarritoRM()).list();
+        return jdbcClient.sql(sql).query(new DetalleCarritoRM()).list();
     }
 
     // 2. Obtener por ID
-    public Optional<DetallesCarrito> findById(int id) {
+    public Optional<DetalleCarrito> findById(int id) {
         String sql = "SELECT * FROM detalles_carrito WHERE id = :id";
-        return jdbcClient.sql(sql).param("id", id).query(new DetallesCarritoRM()).optional();
+        return jdbcClient.sql(sql).param("id", id).query(new DetalleCarritoRM()).optional();
     }
 
     // 3. Obtener carrito de un usuario específico (MUY IMPORTANTE)
-    public List<DetallesCarrito> findByUsuarioId(int usuarioId) {
+    public List<DetalleCarrito> findByUsuarioId(int usuarioId) {
         String sql = "SELECT * FROM detalles_carrito WHERE usuarios_id = :uid";
-        return jdbcClient.sql(sql).param("uid", usuarioId).query(new DetallesCarritoRM()).list();
+        return jdbcClient.sql(sql).param("uid", usuarioId).query(new DetalleCarritoRM()).list();
     }
 
     // 4. Agregar al carrito (Calculando precio automáticamente)
-    public DetallesCarrito save(DetallesCarritoDTO dto) {
+    public DetalleCarrito save(DetalleCarritoDTO dto) {
         // A) Obtenemos el precio unitario desde la tabla 'productos'
         String sqlPrecio = "SELECT precio FROM productos WHERE id = :pid";
         Double precioUnitario = jdbcClient.sql(sqlPrecio)
@@ -68,7 +68,7 @@ public class DetallesCarritoRepository {
     }
 
     // 5. Actualizar cantidad (Recalcula el precio)
-    public DetallesCarrito update(int id, PUTDetallesCarritoDTO dto) {
+    public DetalleCarrito update(int id, PUTDetalleCarritoDTO dto) {
         // A) Obtenemos precio unitario de nuevo
         String sqlPrecio = "SELECT precio FROM productos WHERE id = :pid";
         Double precioUnitario = jdbcClient.sql(sqlPrecio)
