@@ -10,8 +10,11 @@ import com.TecNM_ITLP.API.dto.ProductoDTO;
 import com.TecNM_ITLP.API.models.Producto;
 import com.TecNM_ITLP.API.repository.ProductoRepository;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/productos")
+@Tag(name = "Productos", description = "Catálogo de productos")
 public class ProductoController {
 
     @Autowired
